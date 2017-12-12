@@ -1,7 +1,7 @@
 {
   "extends": ["airbnb", "prettier", "prettier/flowtype", "prettier/react"],
   "env": {
-    "browser": true
+    "node": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
@@ -10,7 +10,7 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "jsx-a11y", "import"],
+  "plugins": ["import"],
   "globals": {},
   "rules": {
     "jsx-a11y/anchor-is-valid": [
@@ -27,6 +27,7 @@
       // jest files
       "files": ["src/**/*.test.{js,jsx}"],
       "env": {
+        "browser": true,
         "jest": true
       }
     }
