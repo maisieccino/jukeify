@@ -10,7 +10,8 @@
     "postinstall": "cd app && yarn install",
     "start": "node start.js",
     "start-app": "cd app && start",
-    "start-server": "node server.js"
+    "start-server": "node server.js",
+    "storybook": "cd app && yarn run storybook"
   },
   "devDependencies": {
     "concurrently": "^3.5.1",

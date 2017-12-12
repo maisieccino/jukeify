@@ -2,5 +2,20 @@
   "env": {
     "browser": true
   },
-  "plugins": ["react", "jsx-a11y", "import"]
+  "plugins": ["react", "jsx-a11y", "import"],
+  "overrides": [
+    {
+      "files": ["**/*.stories.{js,jsx}"],
+      "rules": {
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true,
+            "optionalDependencies": false,
+            "peerDependencies": false
+          }
+        ]
+      }
+    }
+  ]
 }

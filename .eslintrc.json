@@ -25,7 +25,7 @@
   "overrides": [
     {
       // jest files
-      "files": ["src/**/*.test.{js,jsx}"],
+      "files": ["**/*.test.{js,jsx}"],
       "env": {
         "browser": true,
         "jest": true
