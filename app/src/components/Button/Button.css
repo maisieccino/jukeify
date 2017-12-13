@@ -1,0 +1,42 @@
+button {
+  background: var(--gradient-main);
+  border: var(--border-default);
+  color: var(--color-fg);
+  padding: 0.5rem;
+  border-radius: var(--border-radius-default);
+  cursor: pointer;
+  font-size: 1.1rem;
+  position: relative;
+  overflow: visible;
+  z-index: 0;
+  box-sizing: border-box;
+}
+
+button::before {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  content: "";
+  border-radius: var(--border-radius-default);
+  z-index: -1;
+  filter: blur(8px);
+  transform: scale(0.7);
+  transition: transform var(--animation-timing-default);
+}
+
+button:hover::before {
+  transform: scale(1.1);
+}
+
+button.round {
+  border-radius: 50%;
+  height: 2.5rem;
+  width: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

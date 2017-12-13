@@ -1,14 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
+import { propTypes, defaultProps } from "./button.props";
+import "./Button.css";
 
 const Button = ({ children, ...rest }) => <button {...rest}>{children}</button>;
 
-Button.propTypes = {
-  children: PropTypes.node,
-};
+Button.propTypes = propTypes;
+Button.defaultProps = defaultProps;
 
-Button.defaultProps = {
-  children: "",
-};
+export const RoundButton = ({ children, className, ...rest }) => (
+  <button className={`round ${className}`} {...rest}>
+    {children}
+  </button>
+);
+
+RoundButton.propTypes = propTypes;
+RoundButton.defaultProps = defaultProps;
 
 export default Button;

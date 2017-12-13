@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import * as Constants from "./constants/Api";
+import "./style/variables.css";
 import "./App.css";
 
 class App extends Component {

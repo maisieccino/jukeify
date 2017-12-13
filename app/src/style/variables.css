@@ -1,0 +1,26 @@
+:root {
+  --color-green: #159957;
+  --color-blue: #155799;
+  --color-black: #022f40;
+  --color-white: #ccdbdc;
+  --color-turquoise: #9ad1d4;
+
+  --color-primary: var(--color-green);
+  --color-secondary: var(--color-blue);
+  --color-fg: var(--color-white);
+  --color-bg: var(--color-black);
+
+  --gradient-main: linear-gradient(
+    45deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
+
+  --border-radius-default: 0.5rem;
+  --border-width-default: 0.1rem;
+  --border-color-default: var(--color-fg);
+  --border-default: solid var(--border-width-default)
+    var(--border-color-default);
+
+  --animation-timing-default: 0.25s ease-in-out;
+}
