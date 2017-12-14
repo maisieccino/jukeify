@@ -2,6 +2,7 @@
   --color-green: #159957;
   --color-blue: #155799;
   --color-black: #022f40;
+  --color-grey: #2b4f5c;
   --color-white: #ccdbdc;
   --color-turquoise: #9ad1d4;
 
@@ -22,5 +23,14 @@
   --border-default: solid var(--border-width-default)
     var(--border-color-default);
 
-  --animation-timing-default: 0.25s ease-in-out;
+  --animation-timing-duration-default: 0.25s;
+  --animation-timing-function-default: ease-in-out;
+  --animation-timing-default: var(--animation-timing-duration-default)
+    var(--animation-timing-function-default);
+
+  --font-family: "Circular Std Book", "Circular", "Arial", "sans-serif";
+}
+
+body {
+  background-color: var(--color-bg);
 }

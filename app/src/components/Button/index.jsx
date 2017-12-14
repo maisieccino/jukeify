@@ -7,8 +7,11 @@ const Button = ({ children, ...rest }) => <button {...rest}>{children}</button>;
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;
 
-export const RoundButton = ({ children, className, ...rest }) => (
-  <button className={`round ${className}`} {...rest}>
+export const RoundButton = ({ children, className, spinning, ...rest }) => (
+  <button
+    className={`round ${className} ${spinning ? "spinning" : ""}`}
+    {...rest}
+  >
     {children}
   </button>
 );

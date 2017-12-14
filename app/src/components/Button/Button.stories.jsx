@@ -3,10 +3,10 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { text, withKnobs } from "@storybook/addon-knobs";
 import { withInfo } from "@storybook/addon-info";
-import Button, { RoundButton } from "./";
+import Button from "./";
 import { Center } from "../../storybook";
 
-storiesOf("Button", module)
+storiesOf("Button/Regular", module)
   .addDecorator(withKnobs)
   .add(
     "with text",
@@ -45,12 +45,14 @@ storiesOf("Button", module)
     )),
   )
   .add(
-    "rounded",
+    "disabled",
     withInfo(`
-    Small, round, button, mainly designed for icons.
+    Disabled button that doesn't accept input.
     `)(() => (
       <Center>
-        <RoundButton>A</RoundButton>
+        <Button onclick={action("clicked")} disabled>
+          You cant{"'"}t click me!
+        </Button>
       </Center>
     )),
   );
