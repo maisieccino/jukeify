@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as Icon from "react-feather";
-import { PageContainer } from "../../components/Containers";
+import { BackgroundImage, PageContainer } from "../../components/Containers";
 import { Title, Subtitle, BodyText } from "../../components/Typography";
 import { Button, ButtonContainer, RoundButton } from "../../components/Button";
 
@@ -21,37 +21,49 @@ export default class PlayerPage extends Component {
       player: null,
       error: "",
       deviceId: "",
-      track: PlayerPage.TRACK_PLACEHOLDER,
-      artist: PlayerPage.ARTIST_PLACEHOLDER,
+      currentTrack: {
+        name: PlayerPage.TRACK_PLACEHOLDER,
+        artist: PlayerPage.ARTIST_PLACEHOLDER,
+      },
     };
     this.checkPlayer = setTimeout(() => this.checkForPlayer(), 2000);
+    this.pageEl = document.querySelector(".page-container");
   }
 
   onPlayerError(error) {
     this.setState({ error });
   }
 
-  async getState() {
+  async getState(newState = null) {
     try {
-      const state = await this.player.getCurrentState();
+      const state = newState || (await this.player.getCurrentState());
       if (state === null) {
         this.setState({ error: "Not currently connected :(" });
       } else {
-        console.log(state);
         const { current_track: currentTrack } = state.track_window;
         const artist = currentTrack.artists.map(a => a.name).join(", ");
         const track = currentTrack.name;
+        const albumArt = currentTrack.album.images.sort(
+          (a, b) => b.height + b.width - (a.height + a.width),
+        )[0].url;
         this.setState({
-          track,
-          artist,
+          currentTrack: {
+            ...currentTrack,
+            track,
+            artist,
+            albumArt,
+          },
           error: "",
         });
+        // this.forceUpdate();
       }
     } catch (err) {
       console.error(typeof err === "string" ? err : err.message);
       this.setState({
-        track: PlayerPage.TRACK_PLACEHOLDER,
-        artist: PlayerPage.ARTIST_PLACEHOLDER,
+        currentTrack: {
+          track: PlayerPage.TRACK_PLACEHOLDER,
+          artist: PlayerPage.ARTIST_PLACEHOLDER,
+        },
       });
     }
   }
@@ -79,9 +91,7 @@ export default class PlayerPage extends Component {
       this.onPlayerError(`Authentication error: ${e.message}`);
       this.props.onAuthError(e);
     });
-    this.player.on("player_state_changed", playerState =>
-      console.log(playerState),
-    );
+    this.player.on("player_state_changed", state => this.getState(state));
     this.player.on("account_error", e =>
       this.onPlayerError(`account error: ${e.message}`),
     );
@@ -117,13 +127,15 @@ export default class PlayerPage extends Component {
   }
 
   render() {
-    const { error, deviceId, track, artist } = this.state;
+    const { error, deviceId, currentTrack } = this.state;
+    const { artist, name: trackName, albumArt } = currentTrack;
     return (
       <PageContainer>
+        <BackgroundImage imgUrl={albumArt} />
         {!deviceId && <BodyText>Awaiting player connection...</BodyText>}
         {error && <BodyText>Error: {error}</BodyText>}
         <Subtitle>{artist}</Subtitle>
-        <Title>{track}</Title>
+        <Title>{trackName}</Title>
         <ButtonContainer>
           <RoundButton>
             <Icon.SkipBack />

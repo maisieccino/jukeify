@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { propTypes, defaultProps } from "./Containers.props";
 
 import "./Containers.css";
@@ -20,3 +21,12 @@ export const PageContainer = ({ children, className, style, visible }) => (
 );
 PageContainer.propTypes = propTypes;
 PageContainer.defaultProps = defaultProps;
+
+export const BackgroundImage = ({ imgUrl }) => (
+  <div
+    className="background-image"
+    style={{ backgroundImage: `url("${imgUrl}")` }}
+  />
+);
+BackgroundImage.propTypes = { imgUrl: PropTypes.string };
+BackgroundImage.defaultProps = { imgUrl: "" };
