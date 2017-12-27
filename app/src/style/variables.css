@@ -1,7 +1,8 @@
 :root {
   --color-green: #159957;
   --color-blue: #155799;
-  --color-black: #022f40;
+  --color-darkblue: #022f40;
+  --color-black: #051920;
   --color-grey: #2b4f5c;
   --color-white: #ccdbdc;
   --color-turquoise: #9ad1d4;
@@ -9,7 +10,7 @@
   --color-primary: var(--color-green);
   --color-secondary: var(--color-blue);
   --color-fg: var(--color-white);
-  --color-bg: var(--color-black);
+  --color-bg: var(--color-darkblue);
 
   --gradient-main: linear-gradient(
     45deg,

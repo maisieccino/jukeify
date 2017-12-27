@@ -1,11 +1,23 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { propTypes, defaultProps } from "./button.props";
 import "./Button.css";
 
-const Button = ({ children, ...rest }) => <button {...rest}>{children}</button>;
+export const Button = ({ children, ...rest }) => (
+  <button {...rest}>{children}</button>
+);
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;
+
+export const LinkButton = ({ children, className, href, ...rest }) => (
+  <a href={href} className={`button ${className || ""}`} {...rest}>
+    {children}
+  </a>
+);
+
+LinkButton.propTypes = { href: PropTypes.string.isRequired, ...propTypes };
+LinkButton.defaultProps = defaultProps;
 
 export const RoundButton = ({ children, className, spinning, ...rest }) => (
   <button
@@ -16,7 +28,20 @@ export const RoundButton = ({ children, className, spinning, ...rest }) => (
   </button>
 );
 
-RoundButton.propTypes = propTypes;
-RoundButton.defaultProps = defaultProps;
+RoundButton.propTypes = {
+  ...propTypes,
+  spinning: PropTypes.bool,
+};
+RoundButton.defaultProps = {
+  ...defaultProps,
+  spinning: false,
+};
+
+export const ButtonContainer = ({ children, className }) => (
+  <div className={`button-container ${className || ""}`}>{children}</div>
+);
+
+ButtonContainer.propTypes = propTypes;
+ButtonContainer.defaultProps = defaultProps;
 
 export default Button;

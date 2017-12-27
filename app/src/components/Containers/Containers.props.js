@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 export const propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  disabled: PropTypes.bool,
+  style: PropTypes.shape(),
+  visible: PropTypes.bool,
 };
 
 export const defaultProps = {
   children: "",
   className: "",
-  disabled: false,
+  style: {},
+  visible: true,
 };

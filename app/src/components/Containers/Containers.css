@@ -1,0 +1,19 @@
+.app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: linear-gradient(45deg, var(--color-black), var(--color-grey));
+  align-items: stretch;
+}
+
+.page-container {
+  display: flex;
+  padding: 2rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.page-container.hidden {
+  opacity: 0;
+}

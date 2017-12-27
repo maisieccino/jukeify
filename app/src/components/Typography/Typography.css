@@ -14,3 +14,8 @@ strong {
   color: var(--color-fg);
   font-family: var(--font-family);
 }
+
+h1 {
+  font-size: 3rem;
+  margin: 0.75rem 0;
+}

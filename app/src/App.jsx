@@ -1,22 +1,48 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import * as Constants from "./constants/Api";
+import { AppContainer } from "./components/Containers";
+import SplashPage from "./containers/pages/SplashPage";
+import PlayerPage from "./containers/pages/PlayerPage";
+
 import "./style/variables.css";
 import "./App.css";
-import { Title } from "./components/Typography";
 
 class App extends Component {
+  state = {
+    signedIn: false,
+    token: "",
+    error: "",
+  };
+
+  componentDidMount() {
+    const url = new URL(window.location.href);
+    const success = url.searchParams.get("success");
+    if (success === "true") {
+      const token = url.searchParams.get("token");
+      if (token) {
+        this.state.signedIn = true;
+        this.state.token = token;
+        this.forceUpdate();
+      }
+    }
+  }
+
+  onAuthFail(error) {
+    this.setState({
+      signedIn: false,
+      error,
+    });
+  }
+
   render() {
+    const { signedIn, token, error } = this.state;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <AppContainer>
+        {signedIn ? (
+          <PlayerPage token={token} onAuthError={e => this.onAuthFail(e)} />
+        ) : (
+          <SplashPage error={error} />
+        )}
+      </AppContainer>
     );
   }
 }

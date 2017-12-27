@@ -13,6 +13,7 @@
   "plugins": ["import"],
   "globals": {},
   "rules": {
+    "comma-dangle": ["error", "always-multiline"],
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
@@ -24,7 +25,6 @@
   },
   "overrides": [
     {
-      // jest files
       "files": ["**/*.test.{js,jsx}"],
       "env": {
         "browser": true,
