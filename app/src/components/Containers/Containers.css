@@ -37,3 +37,28 @@
 .page-container.hidden {
   opacity: 0;
 }
+
+.album-art {
+  width: 12rem;
+  height: 12rem;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: 0;
+}
+.album-art::before,
+.album-art::after {
+  border: 0.2rem solid var(--color-fg);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  position: absolute;
+  content: "";
+  background: inherit;
+}
+.album-art::before {
+  z-index: -1;
+  filter: blur(18px);
+}

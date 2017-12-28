@@ -30,3 +30,9 @@ export const BackgroundImage = ({ imgUrl }) => (
 );
 BackgroundImage.propTypes = { imgUrl: PropTypes.string };
 BackgroundImage.defaultProps = { imgUrl: "" };
+
+export const AlbumArtImage = ({ imgUrl }) => (
+  <div className="album-art" style={{ backgroundImage: `url("${imgUrl}")` }} />
+);
+AlbumArtImage.propTypes = { imgUrl: PropTypes.string };
+AlbumArtImage.defaultProps = { imgUrl: "" };

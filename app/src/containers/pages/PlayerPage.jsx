@@ -1,10 +1,10 @@
 /* eslint react/no-unused-state: 0 */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import * as Icon from "react-feather";
 import { BackgroundImage, PageContainer } from "../../components/Containers";
-import { Title, Subtitle, BodyText } from "../../components/Typography";
-import { Button, ButtonContainer, RoundButton } from "../../components/Button";
+import NowPlaying from "../../components/NowPlaying";
+import TrackProgress from "../../components/TrackProgress";
+import { BodyText } from "../../components/Typography";
 
 export default class PlayerPage extends Component {
   static propTypes = {
@@ -14,6 +14,8 @@ export default class PlayerPage extends Component {
 
   static ARTIST_PLACEHOLDER = "Artist";
   static TRACK_PLACEHOLDER = "Track Name";
+
+  static PLAYER_UPDATE_INTERVAL = 400;
 
   constructor(props) {
     super(props);
@@ -25,9 +27,13 @@ export default class PlayerPage extends Component {
         name: PlayerPage.TRACK_PLACEHOLDER,
         artist: PlayerPage.ARTIST_PLACEHOLDER,
       },
+      position: 0,
+      duration: 0,
+      isPlaying: false,
     };
-    this.checkPlayer = setTimeout(() => this.checkForPlayer(), 2000);
+    this.checkPlayer = setInterval(() => this.checkForPlayer(), 2000);
     this.pageEl = document.querySelector(".page-container");
+    this.playerUpdate = null;
   }
 
   onPlayerError(error) {
@@ -35,6 +41,10 @@ export default class PlayerPage extends Component {
   }
 
   async getState(newState = null) {
+    console.log("getting state...");
+    if (newState) {
+      clearInterval(this.playerUpdate);
+    }
     try {
       const state = newState || (await this.player.getCurrentState());
       if (state === null) {
@@ -46,25 +56,34 @@ export default class PlayerPage extends Component {
         const albumArt = currentTrack.album.images.sort(
           (a, b) => b.height + b.width - (a.height + a.width),
         )[0].url;
-        this.setState({
+        await this.setState({
           currentTrack: {
             ...currentTrack,
             track,
             artist,
+            album: currentTrack.album.name,
             albumArt,
           },
+          isPlaying: !state.paused,
+          position: state.position,
+          duration: state.duration,
           error: "",
         });
-        // this.forceUpdate();
       }
     } catch (err) {
       console.error(typeof err === "string" ? err : err.message);
-      this.setState({
+      await this.setState({
         currentTrack: {
           track: PlayerPage.TRACK_PLACEHOLDER,
           artist: PlayerPage.ARTIST_PLACEHOLDER,
         },
       });
+    }
+    if (!this.playerUpdate) {
+      this.playerUpdate = setInterval(
+        () => this.getState(),
+        PlayerPage.PLAYER_UPDATE_INTERVAL,
+      );
     }
   }
 
@@ -102,12 +121,12 @@ export default class PlayerPage extends Component {
       await this.setState({ deviceId: data.device_id });
       await this.switchPlayback();
       await this.getState();
+      this.playerUpdate = setInterval(
+        async () => this.getState(),
+        PlayerPage.PLAYER_UPDATE_INTERVAL,
+      );
     });
     this.player.connect();
-  }
-
-  clickPlayButton() {
-    this.player.togglePlay();
   }
 
   checkForPlayer() {
@@ -122,34 +141,36 @@ export default class PlayerPage extends Component {
       });
       this.initializePlayerHandlers();
       this.forceUpdate();
-      clearTimeout(this.checkPlayer);
+      clearInterval(this.checkPlayer);
     }
   }
 
   render() {
-    const { error, deviceId, currentTrack } = this.state;
-    const { artist, name: trackName, albumArt } = currentTrack;
+    const {
+      error,
+      deviceId,
+      currentTrack,
+      isPlaying,
+      position,
+      duration,
+    } = this.state;
+    const { artist, name: trackName, albumArt, album } = currentTrack;
     return (
       <PageContainer>
         <BackgroundImage imgUrl={albumArt} />
         {!deviceId && <BodyText>Awaiting player connection...</BodyText>}
         {error && <BodyText>Error: {error}</BodyText>}
-        <Subtitle>{artist}</Subtitle>
-        <Title>{trackName}</Title>
-        <ButtonContainer>
-          <RoundButton>
-            <Icon.SkipBack />
-          </RoundButton>
-          <RoundButton onClick={() => this.clickPlayButton()}>
-            <Icon.Pause />
-          </RoundButton>
-          <RoundButton>
-            <Icon.SkipForward />
-          </RoundButton>
-        </ButtonContainer>
-        <ButtonContainer>
-          <Button onClick={() => this.getState()}>Get Info</Button>
-        </ButtonContainer>
+        <NowPlaying
+          artists={artist}
+          trackName={trackName}
+          albumName={album}
+          albumArtUrl={albumArt}
+          isPlaying={isPlaying}
+          onPlayClick={() => this.player.togglePlay()}
+          onPrevClick={() => this.player.previousTrack()}
+          onNextClick={() => this.player.nextTrack()}
+        />
+        <TrackProgress position={position} duration={duration} />
       </PageContainer>
     );
   }

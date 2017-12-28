@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { text, withKnobs } from "@storybook/addon-knobs";
 import { withInfo } from "@storybook/addon-info";
-import Button from "./";
+import { Button } from "./";
 import { Center } from "../../storybook";
 
 storiesOf("Button/Regular", module)

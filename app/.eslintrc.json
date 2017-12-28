@@ -3,10 +3,14 @@
     "browser": true
   },
   "plugins": ["react", "jsx-a11y", "import"],
+  "rules": {
+    "react/prefer-stateless-function": "off"
+  },
   "overrides": [
     {
       "files": ["**/*.stories.{js,jsx}"],
       "rules": {
+        "no-console": "warn",
         "import/no-extraneous-dependencies": [
           "error",
           {

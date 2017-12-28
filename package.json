@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "precommit": "yarn run lint:staged",
-    "lint": "eslint src --ext .js --ext .jsx --cache --ignore-path .gitignore",
-    "lint:force": "eslint src --ext .js --ext .jsx --ignore-path .gitignore",
+    "lint": "eslint . --ext .js --ext .jsx --cache --ignore-path .gitignore",
+    "lint:force": "eslint . --ext .js --ext .jsx --ignore-path .gitignore",
     "lint:staged": "lint-staged",
     "format": "prettier --write --trailing-comma all src/**/*.{js,jsx}",
     "postinstall": "cd app && yarn install",

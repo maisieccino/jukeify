@@ -15,7 +15,9 @@ class App extends Component {
 
   componentDidMount() {
     const url = new URL(window.location.href);
-    const success = url.searchParams.get("success");
+    const success = url.searchParams
+      ? url.searchParams.get("success")
+      : "false";
     if (success === "true") {
       const token = url.searchParams.get("token");
       if (token) {

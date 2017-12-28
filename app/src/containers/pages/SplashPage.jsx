@@ -1,9 +1,10 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { PageContainer } from "../../components/Containers";
 import { Title, Subtitle, BodyText } from "../../components/Typography";
 import { ButtonContainer, LinkButton } from "../../components/Button";
 
-export default ({ error }) => (
+const SplashPage = ({ error }) => (
   <PageContainer>
     {error && <BodyText>Error: {JSON.stringify(error)}</BodyText>}
     <Title>Jukeify</Title>
@@ -13,3 +14,13 @@ export default ({ error }) => (
     </ButtonContainer>
   </PageContainer>
 );
+
+SplashPage.propTypes = {
+  error: PropTypes.string,
+};
+
+SplashPage.defaultProps = {
+  error: "",
+};
+
+export default SplashPage;

@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 
 import "./center.css";
 
-const Center = ({ children }) => <div className="centered">{children}</div>;
+const Center = ({ children, ...rest }) => (
+  <div className="centered" {...rest}>
+    {children}
+  </div>
+);
 
 Center.propTypes = {
   children: PropTypes.node,

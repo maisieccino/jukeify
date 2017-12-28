@@ -1,0 +1,29 @@
+.seek-bar {
+  width: 100%;
+  height: 0.4rem;
+  background-color: var(--color-fg);
+  position: relative;
+  border-radius: 0.4rem;
+}
+.seek-content {
+  left: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  display: block;
+  content: "";
+  background-color: var(--color-green);
+  transition: right var(--animation-timing-default);
+  border-radius: 0.4rem;
+}
+
+@media (min-width: 500px) {
+  .seek-bar {
+    width: 15rem;
+    height: 0.2rem;
+    border-radius: 0.2rem;
+  }
+  .seek-content {
+    border-radius: 0.2rem;
+  }
+}

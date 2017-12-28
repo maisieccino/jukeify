@@ -21,7 +21,8 @@
         "specialLink": ["to"],
         "aspects": ["noHref", "invalidHref", "preferButton"]
       }
-    ]
+    ],
+    "no-console": "off"
   },
   "overrides": [
     {
